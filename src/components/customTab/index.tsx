@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen'
-import { AntDesign, MaterialIcons } from '@expo/vector-icons'
+import { AntDesign, Octicons, Ionicons } from '@expo/vector-icons'
 import { Colors } from '@/constants/Colors';
 
 type Props = {
@@ -12,19 +12,20 @@ type Props = {
 const CustomTab = ({ state, descriptors, navigation }: Props) => {
 
   const icons = {
-    Home: (props: any) => <AntDesign name='home' size={hp(3)} color={Colors.black} {...props} />,
-    Setting: (props: any) => <AntDesign name='setting' size={hp(3)} color={Colors.black} {...props} />
+    Home: (props: any) => <AntDesign name='home' size={hp(3.5)} color={Colors.white} {...props} />,
+    Wallet: (props: any) => <Ionicons name="wallet-outline" size={hp(3.5)} color={Colors.white} {...props} />,
+    Setting: (props: any) => <AntDesign name='setting' size={hp(3.5)} color={Colors.white} {...props} />
   }
 
   return (
     <View
       style={{
         bottom: hp(0),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
         width: '100%',
-        paddingVertical: hp(1),
+        paddingVertical: hp(2),
         borderTopWidth: hp(.1),
-        borderTopColor: Colors.gray,
+        borderTopColor: Colors.white,
         flexDirection: 'row',
         justifyContent:'space-around',
         alignItems: 'center',
@@ -69,17 +70,17 @@ const CustomTab = ({ state, descriptors, navigation }: Props) => {
             {isFocused ? (
               <View >
                 {icons[route.name]({
-                  color: Colors.deepPrimary, // Change icon color when focused
+                  color: Colors.blue, // Change icon color when focused
                 })}
               </View>
             ) : (
               icons[route.name]({
-                color: Colors.black, // Default icon color when not focused
+                color: Colors.white, // Default icon color when not focused
               })
             )}
-            <Text style={{ color: isFocused ? Colors.deepPrimary : Colors.black, fontFamily: 'i400', fontSize: hp(1.5) }}>
+            {/* <Text style={{ color: isFocused ? Colors.deepPrimary : Colors.black, fontFamily: 'i400', fontSize: hp(1.5) }}>
               {label}
-            </Text>
+            </Text> */}
           </TouchableOpacity>
         );
       })}

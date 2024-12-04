@@ -5,13 +5,15 @@ export type AUTHENTICATED_PARAM = {
   Setting: undefined,
   Navigation: undefined,
   Wallet: undefined,
+  Statistic: undefined,
 }
 
 export enum AUTHENTICATED_PATH {
   Home = "Home",
   Setting = "Setting",
   Navigation = "Navigation",
-  Wallet = "Wallet"
+  Wallet = "Wallet",
+  Statistic = "Statistic"
 }
 
 export interface AUTH_PROP {

@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen'
-import { AntDesign, Octicons, Ionicons } from '@expo/vector-icons'
+import { AntDesign, Octicons, Ionicons, EvilIcons } from '@expo/vector-icons'
 import { Colors } from '@/constants/Colors';
 
 type Props = {
@@ -13,6 +13,7 @@ const CustomTab = ({ state, descriptors, navigation }: Props) => {
 
   const icons = {
     Home: (props: any) => <AntDesign name='home' size={hp(3.5)} color={Colors.white} {...props} />,
+    Statistic: (props: any) => <Ionicons name="stats-chart-outline" size={hp(3.5)} color={Colors.white} {...props} />,
     Wallet: (props: any) => <Ionicons name="wallet-outline" size={hp(3.5)} color={Colors.white} {...props} />,
     Setting: (props: any) => <AntDesign name='setting' size={hp(3.5)} color={Colors.white} {...props} />
   }
@@ -25,7 +26,7 @@ const CustomTab = ({ state, descriptors, navigation }: Props) => {
         width: '100%',
         paddingVertical: hp(2),
         borderTopWidth: hp(.1),
-        borderTopColor: Colors.white,
+        borderTopColor: Colors.gray,
         flexDirection: 'row',
         justifyContent:'space-around',
         alignItems: 'center',

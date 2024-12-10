@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <Container padX={hp(2)} bgColor={Colors.black}>
       <UserHeader/>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingVertical:hp(2)}}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingVertical: hp(2) }}>
         <View style={{backgroundColor:Colors.white, padding:hp(3), borderRadius:hp(3)}}>
           <View style={{paddingBottom:hp(2)}}>
             <Title textA={'left'} textT={'capitalize'}>Total Balance</Title>

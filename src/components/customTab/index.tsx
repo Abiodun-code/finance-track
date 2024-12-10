@@ -15,7 +15,7 @@ const CustomTab = ({ state, descriptors, navigation }: Props) => {
     Home: (props: any) => <AntDesign name='home' size={hp(3.5)} color={Colors.white} {...props} />,
     Statistic: (props: any) => <Ionicons name="stats-chart-outline" size={hp(3.5)} color={Colors.white} {...props} />,
     Wallet: (props: any) => <Ionicons name="wallet-outline" size={hp(3.5)} color={Colors.white} {...props} />,
-    Setting: (props: any) => <AntDesign name='setting' size={hp(3.5)} color={Colors.white} {...props} />
+    Setting: (props: any) => <Ionicons name='person-outline' size={hp(3.5)} color={Colors.white} {...props} />
   }
 
   return (

@@ -4,15 +4,19 @@ import ConfigureWrapper from '@/components/configureWrapper'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import Main from './src/navigation'
 import { StatusBar } from 'expo-status-bar'
+import { Provider } from 'react-redux'
+import { store } from '@/services/store/store'
 
 const App = () => {
   return (
-    <ConfigureWrapper>
-      <SafeAreaProvider>
-        <Main/>
-        <StatusBar style='light'/>
-      </SafeAreaProvider>
-    </ConfigureWrapper>
+    <Provider store={store}>
+      <ConfigureWrapper>
+        <SafeAreaProvider>
+          <Main />
+          <StatusBar style='light' />
+        </SafeAreaProvider>
+      </ConfigureWrapper>
+    </Provider>
   )
 }
 

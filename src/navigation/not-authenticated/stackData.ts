@@ -1,5 +1,6 @@
 import { Onboarding, SignIn, SignUp } from "@/screens/not-authenticated";
 import { NOT_AUTHENTICATED_PATH } from "@/types/index";
+import SignUpStack from "./sign-up-stack";
 
 export const NOT_AUTHENTICATED_STACK = [
   {
@@ -14,7 +15,7 @@ export const NOT_AUTHENTICATED_STACK = [
   },
   {
     id: 2,
-    name: NOT_AUTHENTICATED_PATH.SignUp,
-    screen: SignUp,
+    name: NOT_AUTHENTICATED_PATH.SignUpStack,
+    screen: SignUpStack,
   }
 ]

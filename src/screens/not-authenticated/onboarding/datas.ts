@@ -12,7 +12,7 @@ export const SOCIAL_HANDLER = [
   {
     id: 1,
     title: 'Sign up',
-    path: NOT_AUTHENTICATED_PATH.SignUp,
+    path: NOT_AUTHENTICATED_PATH.SignUpStack,
     bg: Colors.grey,
   }
 ]

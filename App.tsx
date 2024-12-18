@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import ConfigureWrapper from '@/components/configureWrapper'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import Main from './src/navigation'
@@ -8,6 +8,8 @@ import { Provider } from 'react-redux'
 import { store } from '@/services/store/store'
 
 const App = () => {
+
+  // const [accessToken, setAccessToken] = useState("")
   return (
     <Provider store={store}>
       <ConfigureWrapper>

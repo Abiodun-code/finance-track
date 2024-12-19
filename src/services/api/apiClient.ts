@@ -1,13 +1,14 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { store } from '../store/store';
 
-const API_URL = 'http://localhost:8080/';
+const API_URL = 'http://localhost:8080/'; // Update this to your backend URL
 
 // Create Axios instance
 export const apiClient = axios.create({
   baseURL: API_URL,
   timeout: 5000,
-  headers: {'Content-Type':'application/json'}
+  headers: { 'Content-Type': 'application/json' },
 });
 
 // Helper to get accessToken from AsyncStorage
@@ -18,7 +19,7 @@ const refreshAccessToken = async () => {
   const refreshToken = await AsyncStorage.getItem('refreshToken');
   if (!refreshToken) throw new Error('No refresh token found');
 
-  const response = await apiClient.get(`/refresh-token/${refreshToken}`);
+  const response = await apiClient.get('/auth/refresh-token');
   const { accessToken } = response.data;
 
   // Update AsyncStorage and return the new access token
@@ -26,15 +27,25 @@ const refreshAccessToken = async () => {
   return accessToken;
 };
 
+// Prevent multiple simultaneous refresh requests
+let isRefreshing = false;
+let refreshSubscribers: Array<(token: string) => void> = [];
+
+const onRefreshed = (newAccessToken: string) => {
+  refreshSubscribers.forEach((callback) => callback(newAccessToken));
+  refreshSubscribers = [];
+};
+
+const addRefreshSubscriber = (callback: (token: string) => void) => {
+  refreshSubscribers.push(callback);
+};
+
 // Request Interceptor: Attach Authorization Header
 apiClient.interceptors.request.use(
-  async (config:any) => {
+  async (config: any) => {
     const token = await getAccessToken();
     if (token) {
-      config.headers = {
-        ...config.headers,
-        Authorization: `Bearer ${token}`,
-      };
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
@@ -43,26 +54,37 @@ apiClient.interceptors.request.use(
 
 // Response Interceptor: Handle 401 Unauthorized and Refresh Token
 apiClient.interceptors.response.use(
-  (response) => response, // On success, return the response
+  (response) => response, // Handle successful responses
   async (error) => {
     const originalRequest = error.config;
 
     // Check for 401 Unauthorized and retry
     if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true; // Prevent multiple retries
+      if (isRefreshing) {
+        return new Promise((resolve) => {
+          addRefreshSubscriber((newAccessToken) => {
+            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+            resolve(apiClient(originalRequest));
+          });
+        });
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
       try {
         const newAccessToken = await refreshAccessToken();
+        onRefreshed(newAccessToken);
+        isRefreshing = false;
 
-        // Update the Authorization header for the failed request
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-
-        // Retry the original request
-        return apiClient(originalRequest);
+        return apiClient(originalRequest); // Retry the original request
       } catch (refreshError) {
-        // Token refresh failed, log out the user
-        console.error('Token refresh failed:', refreshError);
-        await AsyncStorage.removeItem('accessToken');
-        await AsyncStorage.removeItem('refreshToken');
+        isRefreshing = false;
+        console.error('Token refresh failed, logging out user:', refreshError);
+
+        // Clear AsyncStorage and log the user out
+        await AsyncStorage.clear();
         return Promise.reject(refreshError);
       }
     }

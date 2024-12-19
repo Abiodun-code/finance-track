@@ -7,7 +7,7 @@ import { Text } from 'react-native-paper';
 import { NOT_AUTH_PROP, NOT_AUTHENTICATED_PATH } from '@/types/not-authenticated';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/services/store/store';
-import { loginUser } from '@/services/store/not-authenticated/createAccountSlice';
+import { loginUser } from '@/services/store/not-authenticated/loginSlice';
 
 const SignIn = ({ navigation }: NOT_AUTH_PROP) => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const SignIn = ({ navigation }: NOT_AUTH_PROP) => {
   const { isLoading, error } = useSelector((state: RootState) => state.createAccount); // Select loading/error state
 
   const handleSignIn = async () => {
-    const response = await dispatch(loginUser({ email:email, password:password })); // Dispatch the thunk
+    const response = await dispatch<any>(loginUser({ email: email, password: password })); // Dispatch the thunk
     console.log('Login successful:', response);
   };
 

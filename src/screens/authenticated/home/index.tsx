@@ -1,5 +1,5 @@
-import { ScrollView, View } from 'react-native'
-import React from 'react'
+import { Alert, ScrollView, View } from 'react-native'
+import React, { useState } from 'react'
 import {Button, Container, Title} from '@/shared/index'
 import { hp } from '@/utils/responsiveHelper'
 import { Colors } from '@/constants/Colors'
@@ -8,8 +8,18 @@ import UserHeader from './components/userHeader'
 import { BAL_SPEND, REC_TRAN } from './datas'
 import { getStatusBgColor, getStatusColor } from '@/utils/getStatusColor'
 import { truncateText } from '@/utils/truncateText'
+import { useDispatch } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
+import useCurrentUser from '@/hooks/useCurrentUser'
+import { logoutUser } from '@/services/store/not-authenticated/loginSlice'
 
 const Home = () => {
+  const { currentUser, currentUserIsLoading } = useCurrentUser();
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch<any>(logoutUser())
+  }
+  
   return (
     <Container padX={hp(2)} bgColor={Colors.black}>
       <UserHeader/>
@@ -24,7 +34,7 @@ const Home = () => {
               <Button key={index} flexD='column' itemAlign='left'>
                 <View style={{flexDirection:'row', alignItems:'center'}}>
                   <View style={{padding:hp(.8), backgroundColor:Colors.gray, borderRadius:hp(5), marginRight:hp(1)}}><item.iconHome name={item.iconName} size={hp(2)} color={Colors.white} /></View>
-                  <Text style={{fontFamily:'i500', textTransform:'capitalize'}} variant='titleMedium'>{item.name}</Text>
+                  <Text style={{ fontFamily: 'i500', textTransform: 'capitalize' }} variant='titleMedium'>{item.name}</Text>
                 </View>
                 <View>
                   <Text style={[{fontFamily:'i700'},getStatusColor(item.name)]} variant='titleMedium'>{item.amount}.00</Text>
@@ -32,6 +42,10 @@ const Home = () => {
               </Button>
             ))}
           </View>
+
+          <Button bg={'red'} press={handleLogout}>
+            <Text style={{ fontFamily: 'i500', textTransform: 'capitalize' }} variant='titleMedium'>gggggg</Text>
+          </Button>
         </View>
         <View style={{paddingTop:hp(2)}}>
           <Title color={Colors.white} textA={'left'} textT={'capitalize'} font={'i400'}>Recent Transactions</Title>

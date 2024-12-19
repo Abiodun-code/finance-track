@@ -9,7 +9,6 @@ import { store } from '@/services/store/store'
 
 const App = () => {
 
-  // const [accessToken, setAccessToken] = useState("")
   return (
     <Provider store={store}>
       <ConfigureWrapper>

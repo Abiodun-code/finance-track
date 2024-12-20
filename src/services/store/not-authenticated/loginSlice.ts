@@ -16,7 +16,10 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }: { email: string; password: string }, { rejectWithValue, dispatch }) => {
     try {
       const res = await apiClient.post("/auth/sign-in", { email, password });
-      const { accessToken, refreshToken, user } = res.data;
+      
+      const accessToken = res.data.accessToken;
+      const refreshToken = res.data.refreshToken;
+      const user = res.data
 
       await AsyncStorage.setItem('accessToken', accessToken);
       await AsyncStorage.setItem('refreshToken', refreshToken);
@@ -78,8 +81,7 @@ export const loginAccount = createSlice({
         state.isLoading = false;
         state.accessToken = action.payload?.accessToken;
         state.refreshToken = action.payload?.refreshToken;
-        state.error = false
-          ;
+        state.error = false;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;

@@ -6,11 +6,11 @@ export const createUser = createAsyncThunk(
   'auth/createUser',
   async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
     try {
-      const res = await apiClient.post('/sign-up', { email, password })
+      const res = await apiClient.post('auth/sign-up', { email, password })
       return res.data;
     } catch (error) {
       if (error instanceof Error) {
-        return rejectWithValue(error.message);
+        return rejectWithValue(error.message)
       }
     }
   }

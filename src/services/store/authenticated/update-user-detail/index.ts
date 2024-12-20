@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { UserData } from "@/types/authenticated/userData";
 import { RootState } from "../../store";
 const API_URL = process.env.API_URL
 const initialState = {
@@ -27,7 +28,7 @@ export const updateUserProfilePictureHandler = createAsyncThunk<any, { userId: s
     }
     const accessAsyncStorage = await AsyncStorage.getItem('user')
     if (accessAsyncStorage) {
-      const currentUser = JSON.parse(accessAsyncStorage)
+      const currentUser = JSON.parse(accessAsyncStorage) as UserData
       currentUser.userData.photo = uri
       await AsyncStorage.setItem('user', JSON.stringify(currentUser))
     }

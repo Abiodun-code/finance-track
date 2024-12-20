@@ -1,32 +1,17 @@
 import { apiClient } from "@/services/api/apiClient";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios, { AxiosError } from "axios";
+import { createSlice } from "@reduxjs/toolkit";
 import { createUser, updateFirstName, updateLastName, verifyOtp } from "./createAccountThunk";
 
 const initialState = {
   error: false,
   message: "",
-  accessToken: "",
-  refreshToken: "",
   isLoading: false,
 };
 
 const createAccountSlice = createSlice({
   name: "createaccount",
   initialState,
-  reducers: {
-    setAuth(state, action) {
-      state.message = action.payload;
-      state.accessToken = action.payload.accessToken;
-      state.refreshToken = action.payload.refreshToken;
-    },
-    clearAuth(state) {
-      state.message = "";
-      state.accessToken = "";
-      state.refreshToken = "";
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(createUser.pending, (state) => {

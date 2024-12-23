@@ -8,15 +8,20 @@ import { NOT_AUTH_PROP, NOT_AUTHENTICATED_PATH } from '@/types/not-authenticated
 import { useDispatch } from 'react-redux';
 import { verifyOtp } from '@/services/store/not-authenticated/sign-up/createAccountThunk';
 import { loginUser } from '@/services/store/not-authenticated/sign-in/loginSlice';
+import { forgetOtp } from '@/services/store/not-authenticated/forget-password/forgetThunk';
 
-const VerifyOtp = ({ navigation, route }: NOT_AUTH_PROP) => {
+const ForgetOtp = ({ navigation, route }: NOT_AUTH_PROP) => {
+
   const dispatch = useDispatch();
-  const { email, password } = route.params as { email: string; password: string }; // Retrieve email and password
+
+  const { email } = route.params as { email: string }; // Retrieve email and password
+  console.log("email: " + email);
 
   const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleVerify = async () => {
+    
     if (!otp.trim() || isNaN(Number(otp))) {
       return Alert.alert('Error', 'Please enter a valid OTP.', [{ text: 'OK' }]);
     }
@@ -24,14 +29,8 @@ const VerifyOtp = ({ navigation, route }: NOT_AUTH_PROP) => {
     setLoading(true);
     try {
       // Verify OTP
-      const verified = await dispatch<any>(verifyOtp({ otp: Number(otp), email })).unwrap();
-
-      if (verified) {
-        // Automatically log in the user after successful OTP verification
-        await dispatch<any>(loginUser({ email, password })).unwrap();
-        // Navigate to the next screen, e.g., FirstName
-        // navigation.navigate(NOT_AUTHENTICATED_PATH.FirstName, { email });
-      }
+      await dispatch<any>(forgetOtp({ otp: Number(otp), email })).unwrap();
+      navigation.navigate(NOT_AUTHENTICATED_PATH.ChangePassword,{email: email})
     } catch (error: any) {
       Alert.alert('Error', error.message || 'Something went wrong. Please try again.', [{ text: 'OK' }]);
     } finally {
@@ -82,4 +81,4 @@ const VerifyOtp = ({ navigation, route }: NOT_AUTH_PROP) => {
   );
 };
 
-export default VerifyOtp;
+export default ForgetOtp;

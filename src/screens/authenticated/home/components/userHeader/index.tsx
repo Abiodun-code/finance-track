@@ -13,7 +13,7 @@ const UserHeader = () => {
     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: hp(2) }}>
       <View>
         <Title textA={'left'} textT={'capitalize'} font={'i400'} color={Colors.white}>Hello,</Title>
-        <Text variant='titleMedium' style={{ color: Colors.white, fontFamily: 'i500' }}>
+        <Text variant='titleMedium' style={{ color: Colors.white, fontFamily: 'i500', textTransform: "capitalize" }}>
           {currentUser && currentUser.user.firstName ? currentUser.user.firstName : 'No Name'}
         </Text>
       </View>

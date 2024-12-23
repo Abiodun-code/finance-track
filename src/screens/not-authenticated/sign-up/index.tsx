@@ -7,7 +7,7 @@ import { Text } from 'react-native-paper';
 import { NOT_AUTH_PROP, NOT_AUTHENTICATED_PATH } from '@/types/not-authenticated';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/services/store/store';
-import { createUser } from '@/services/store/not-authenticated/createAccountThunk';
+import { createUser } from '@/services/store/not-authenticated/sign-up/createAccountThunk';
 
 const SignUp = ({ navigation }: NOT_AUTH_PROP) => {
   const dispatch = useDispatch();
@@ -34,13 +34,9 @@ const SignUp = ({ navigation }: NOT_AUTH_PROP) => {
     }
 
     try {
-      const response = await dispatch<any>(
-        createUser({ email: userText.email, password: userText.password })
-      ).unwrap();
-      console.log("User created successfully:", response);
-      navigation.navigate(NOT_AUTHENTICATED_PATH.FirstName);
+      await dispatch<any>(createUser({ email: userText.email, password: userText.password })).unwrap();
+      navigation.navigate(NOT_AUTHENTICATED_PATH.FirstName,{email:userText.email, password:userText.password});
     } catch (err: any) {
-      console.error("Signup error:", err);
 
       // Extract error message from the backend response
       const errorMessage =
@@ -56,7 +52,7 @@ const SignUp = ({ navigation }: NOT_AUTH_PROP) => {
     <Container padX={hp(2)} bgColor={Colors.black}>
       <ScrollView contentContainerStyle={{ paddingVertical: hp(2) }}>
         <View>
-          <Title color={Colors.white} iconBg={Colors.gray} iconColor={Colors.white} iconR={hp(1.3)} iconP={hp(1.5)} showIcon={true}></Title>
+          <Title color={Colors.white} iconBg={Colors.gray} iconColor={Colors.white} iconR={hp(1.3)} iconP={hp(1.5)} showIcon={true}>{""}</Title>
           <View style={{ paddingTop: hp(3), rowGap: hp(2) }}>
             <Title color={Colors.white} textA="left" textT="capitalize" variant="displaySmall">
               Welcome

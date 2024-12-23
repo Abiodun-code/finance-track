@@ -1,3 +1,6 @@
+import ForgetPassword from "./forget-password";
+import ChangePassword from "./forget-password/change-password";
+import ForgetOtp from "./forget-password/forget-otp";
 import Onboarding from "./onboarding";
 import SignIn from "./sign-in";
 import SignUp from "./sign-up";
@@ -12,4 +15,7 @@ export {
   FirstName,
   LastName,
   VerifyOtp,
+  ForgetPassword,
+  ForgetOtp,
+  ChangePassword,
 }

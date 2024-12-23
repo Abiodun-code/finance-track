@@ -16,7 +16,7 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }: { email: string; password: string }, { rejectWithValue, dispatch }) => {
     try {
       const res = await apiClient.post("/auth/sign-in", { email, password });
-      
+
       const accessToken = res.data.accessToken;
       const refreshToken = res.data.refreshToken;
       const user = res.data
@@ -26,7 +26,6 @@ export const loginUser = createAsyncThunk(
       await AsyncStorage.setItem('user', JSON.stringify(user));
 
       dispatch(setAuth({ accessToken, refreshToken }));
-      console.log(user);
 
       return accessToken;
     } catch (error) {
@@ -45,11 +44,8 @@ export const logoutUser = createAsyncThunk('auth/logoutUser', async (_, { dispat
     // Clear only relevant keys
     await AsyncStorage.multiRemove(['accessToken', 'refreshToken', 'user']);
 
-    await AsyncStorage.removeItem("accessToken");
-
     // Reset Redux state
     dispatch(clearAuth());
-    console.log('Logout successful');
   } catch (error) {
     console.error('Error during logout:', error);
     throw error;
@@ -83,7 +79,7 @@ export const loginAccount = createSlice({
         state.refreshToken = action.payload?.refreshToken;
         state.error = false;
       })
-      .addCase(loginUser.rejected, (state, action) => {
+      .addCase(loginUser.rejected, (state) => {
         state.isLoading = false;
         state.error = true;
       })
@@ -92,10 +88,10 @@ export const loginAccount = createSlice({
       .addCase(logoutUser.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(logoutUser.fulfilled, (state, action) => {
+      .addCase(logoutUser.fulfilled, (state) => {
         state.isLoading = false;
       })
-      .addCase(logoutUser.rejected, (state, action) => {
+      .addCase(logoutUser.rejected, (state) => {
         state.isLoading = false;
         state.error = true;
       });

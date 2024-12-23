@@ -37,8 +37,6 @@ const useCurrentUser = () => {
       dispatch(setIsUpdatedFalse());
     }
   }, [isUpdated, dispatch]); // Effect runs whenever isUpdated changes
-
-  console.log(currentUser?.user);
   
   return { currentUser, currentUserIsLoading };
 };

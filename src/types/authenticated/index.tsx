@@ -1,3 +1,4 @@
+import { ParamListBase, RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export type AUTHENTICATED_PARAM = {
@@ -18,4 +19,5 @@ export enum AUTHENTICATED_PATH {
 
 export interface AUTH_PROP {
   navigation: NativeStackNavigationProp<AUTHENTICATED_PARAM>;
+  route: RouteProp<ParamListBase>
 };

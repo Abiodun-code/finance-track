@@ -20,7 +20,7 @@ export const updateFirstName = createAsyncThunk(
   'auth/updateFirstName',
   async ({ firstName, email }: { firstName: string; email: string }, { rejectWithValue }) => {
     try {
-      const res = await apiClient.put(`/first-update/${email}`, { firstName });
+      const res = await apiClient.put(`/auth/first-update/${email}`, { firstName });
       return res.data;
     } catch (error) {
       if (error instanceof Error) {
@@ -34,7 +34,7 @@ export const updateLastName = createAsyncThunk(
   'auth/updateLastName',
   async ({ lastName, email }: { lastName: string; email: string }, { rejectWithValue }) => {
     try {
-      const res = await apiClient.put(`/last-update/${email}`, { lastName });
+      const res = await apiClient.put(`/auth/last-update/${email}`, { lastName });
       return res.data;
     } catch (error) {
       if (error instanceof Error) {
@@ -48,7 +48,7 @@ export const verifyOtp = createAsyncThunk(
   'auth/verifyOtp',
   async ({ otp, email }: { otp: number; email: string }, { rejectWithValue }) => {
     try {
-      const res = await apiClient.post(`/verify-otp/${email}`, { otp });
+      const res = await apiClient.post(`/auth/verify-otp/${email}`, { otp });
       return res.data;
     } catch (error) {
       if (error instanceof Error) {
@@ -62,7 +62,7 @@ export const resendOtp = createAsyncThunk(
   "auth/resendOtp",
   async ({ email }: { email: string }, { rejectWithValue }) => {
     try {
-      const res = await apiClient.post(`/resend-otp/${email}`);
+      const res = await apiClient.post(`/auth/resend-otp/${email}`);
       return res.data;
     } catch (error) {
       if (error instanceof Error) {

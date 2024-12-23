@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import createAccountReducer from "./not-authenticated/createAccountSlice"
+import createAccountReducer from "./not-authenticated/sign-up/createAccountSlice"
 import { updateUserReducer } from "./authenticated/update-user-detail";
-import { loginAccountReducer } from "./not-authenticated/loginSlice";
+import { loginAccountReducer } from "./not-authenticated/sign-in/loginSlice";
+import { forgetPasswordReducer } from "./not-authenticated/forget-password/forgetSlice";
 
 export const store = configureStore({
   reducer: {
     createAccount: createAccountReducer,
     loginAccount: loginAccountReducer,
+    forgetPassword: forgetPasswordReducer,
     updateUser: updateUserReducer,
   },
 })

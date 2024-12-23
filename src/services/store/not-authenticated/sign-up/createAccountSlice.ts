@@ -9,7 +9,7 @@ const initialState = {
 };
 
 const createAccountSlice = createSlice({
-  name: "createaccount",
+  name: "createAccount",
   initialState,
   reducers: {},
   extraReducers: (builder) => {

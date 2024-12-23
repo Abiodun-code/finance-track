@@ -7,7 +7,7 @@ import { Text } from 'react-native-paper';
 import { NOT_AUTH_PROP, NOT_AUTHENTICATED_PATH } from '@/types/not-authenticated';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/services/store/store';
-import { loginUser } from '@/services/store/not-authenticated/loginSlice';
+import { loginUser } from '@/services/store/not-authenticated/sign-in/loginSlice';
 
 const SignIn = ({ navigation }: NOT_AUTH_PROP) => {
   const dispatch = useDispatch();
@@ -17,8 +17,8 @@ const SignIn = ({ navigation }: NOT_AUTH_PROP) => {
   const { isLoading, error } = useSelector((state: RootState) => state.createAccount); // Select loading/error state
 
   const handleSignIn = async () => {
-    const response = await dispatch<any>(loginUser({ email: email, password: password })); // Dispatch the thunk
-    console.log('Login successful:', response);
+    // await dispatch<any>(loginUser({ email: "testme@gmail.com", password: "testme" })); // Dispatch the thunk
+    await dispatch<any>(loginUser({ email: email, password: password })); // Dispatch the thunk
   };
 
   return (
@@ -26,7 +26,7 @@ const SignIn = ({ navigation }: NOT_AUTH_PROP) => {
       <ScrollView contentContainerStyle={{ paddingVertical: hp(2) }}>
         <View>
           {/* Titles */}
-          <Title color={Colors.white} iconBg={Colors.gray} iconColor={Colors.white} iconR={hp(1.3)} iconP={hp(1.5)} showIcon={true} />
+          <Title color={Colors.white} iconBg={Colors.gray} iconColor={Colors.white} iconR={hp(1.3)} iconP={hp(1.5)} showIcon={true}>{""}</Title>
           <View style={{ paddingTop: hp(3), rowGap: hp(2) }}>
             <Title color={Colors.white} textA="left" textT="capitalize" variant="displaySmall">Welcome Back</Title>
             <Title color={Colors.white} textA="left" textT="capitalize" variant="titleMedium" font="i300">Sign in now to track all your expenses</Title>
@@ -56,7 +56,7 @@ const SignIn = ({ navigation }: NOT_AUTH_PROP) => {
           />
 
           {/* Forget Password */}
-          <Button mb={hp(5)}>
+          <Button mb={hp(5)} press={()=> navigation.navigate(NOT_AUTHENTICATED_PATH.ForgetPasswordStack)}>
             <Title color={Colors.white} textA="right" textT="capitalize" variant="titleSmall" font="i400">Forget Password?</Title>
           </Button>
 
@@ -76,7 +76,7 @@ const SignIn = ({ navigation }: NOT_AUTH_PROP) => {
           {/* Sign Up Link */}
           <View style={{ paddingTop: hp(3), flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: hp(1) }}>
             <Text variant="titleSmall" style={{ color: Colors.white, fontFamily: 'i500' }}>Don't have an account?</Text>
-            <Button press={() => navigation.navigate(NOT_AUTHENTICATED_PATH.SignUp)}>
+            <Button press={() => navigation.navigate(NOT_AUTHENTICATED_PATH.SignUpStack)}>
               <Text variant="titleSmall" style={{ color: Colors.blue, fontFamily: 'i700' }}>Sign Up</Text>
             </Button>
           </View>

@@ -1,73 +1,58 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { RootState } from "../../store";
-const API_URL = process.env.API_URL
+
 const initialState = {
-  updatingIsLoading: false,
-  error: false,
-  message: '',
-  isUpdated: false,
-}
-export type updateUserState = typeof initialState
+  user: null, // Stores the global user data
+  isLoading: false,
+  error: null,
+};
 
-
-export const updateUserProfilePictureHandler = createAsyncThunk<any, { userId: string, uri: string }, { rejectValue: string, state: RootState }>('post/uodate-user-profile-picture', async ({ userId, uri }, { rejectWithValue, dispatch }) => {
-  try {
-    const res = await fetch(`${API_URL}/user/update-profile-photo`, {
-      method: 'post',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({
-        "userId": userId,
-        "imageUrl": uri
-      })
-    })
-    const data = await res.json()
-    if (!res.ok) {
-      return rejectWithValue(data.message)
-    }
-    const accessAsyncStorage = await AsyncStorage.getItem('user')
-    if (accessAsyncStorage) {
-      const currentUser = JSON.parse(accessAsyncStorage)
-      currentUser.user.photo = uri
-      await AsyncStorage.setItem('user', JSON.stringify(currentUser))
-    }
-    return data.message
-  } catch (error) {
-    if (error instanceof Error) {
-      return rejectWithValue(error.message)
+export const fetchUserFromAsyncStorage = createAsyncThunk(
+  "user/fetchFromAsyncStorage",
+  async (_, { rejectWithValue }) => {
+    try {
+      const user = await AsyncStorage.getItem("user");
+      return user ? JSON.parse(user) : null;
+    } catch (error) {
+      return rejectWithValue("Failed to fetch user from AsyncStorage");
     }
   }
-})
+);
 
-const updateUserSlice = createSlice({
-  name: 'update-user',
-  initialState,
-  reducers: {
-    setIsUpdatedFalse: (state) => {
-      state.isUpdated = false
+export const updateUserInAsyncStorage = createAsyncThunk(
+  "user/updateInAsyncStorage",
+  async (updatedUser: any, { rejectWithValue }) => {
+    try {
+      await AsyncStorage.setItem("user", JSON.stringify(updatedUser));
+      return updatedUser;
+    } catch (error) {
+      return rejectWithValue("Failed to update user in AsyncStorage");
     }
-  },
-  extraReducers(builder) {
-    builder.addCase(updateUserProfilePictureHandler.pending, (state, action) => {
-      state.updatingIsLoading = true
-      state.isUpdated = false
-      state.error = false
-      state.message = ''
+  }
+);
 
-    })
-    builder.addCase(updateUserProfilePictureHandler.fulfilled, (state, action) => {
-      state.updatingIsLoading = false
-      state.isUpdated = true
-      state.error = false
-      state.message = action.payload
-    })
-    builder.addCase(updateUserProfilePictureHandler.rejected, (state, action) => {
-      state.updatingIsLoading = false
-      state.isUpdated = false
-      state.error = true
-      state.message = action.payload ? action.payload : 'unable to cancel your request at this time'
-    })
+const userSlice = createSlice({
+  name: "user",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchUserFromAsyncStorage.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(fetchUserFromAsyncStorage.fulfilled, (state, action) => {
+      state.user = action.payload;
+      state.isLoading = false;
+    });
+    builder.addCase(fetchUserFromAsyncStorage.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
+
+    builder.addCase(updateUserInAsyncStorage.fulfilled, (state, action) => {
+      state.user = action.payload;
+    });
   },
-})
-export const updateUserReducer = updateUserSlice.reducer
-export const { setIsUpdatedFalse } = updateUserSlice.actions
+});
+
+export const updateUserReducer = userSlice.reducer;

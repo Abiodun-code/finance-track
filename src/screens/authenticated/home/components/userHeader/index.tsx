@@ -8,13 +8,15 @@ import { hp } from '@/utils/responsiveHelper';
 import useCurrentUser from '@/hooks/useCurrentUser';
 
 const UserHeader = () => {
-  const { currentUser, currentUserIsLoading } = useCurrentUser();
+  const { user } = useCurrentUser();
+  console.log(user?.user);
+
   return (
     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: hp(2) }}>
       <View>
         <Title textA={'left'} textT={'capitalize'} font={'i400'} color={Colors.white}>Hello,</Title>
         <Text variant='titleMedium' style={{ color: Colors.white, fontFamily: 'i500', textTransform: "capitalize" }}>
-          {currentUser && currentUser.user.firstName ? currentUser.user.firstName : 'No Name'}
+          {user?.user.firstName}
         </Text>
       </View>
       <Button p={hp(2)} bg={Colors.gray} borderR={hp(5)} >

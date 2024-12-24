@@ -6,14 +6,12 @@ import { Colors } from '@/constants/Colors'
 import { PROF_LIST } from './datas'
 import { MaterialIcons } from '@expo/vector-icons'
 import { Text } from 'react-native-paper'
-import useCurrentUser from '@/hooks/useCurrentUser'
 import { useDispatch } from 'react-redux'
 import { logoutUser } from '@/services/store/not-authenticated/sign-in/loginSlice'
 import useImagePicker from '@/hooks/useImagePicker'
+import useCurrentUser from '@/hooks/useCurrentUser'
 
 const Setting = () => {
-
-  const { currentUser, currentUserIsLoading } = useCurrentUser()
 
   const dispatch = useDispatch();
 
@@ -21,7 +19,10 @@ const Setting = () => {
     dispatch<any>(logoutUser());
   };
 
+  const {user} = useCurrentUser();
+
   const { image, pickImage } = useImagePicker()
+
 
   const profileList = PROF_LIST(handleLogout);
 
@@ -44,13 +45,13 @@ const Setting = () => {
           ) : (
             <Button press={pickImage}>
               <View style={{ flex: 1, justifyContent: 'center', borderRadius: hp(7), backgroundColor: Colors.lightPrimary, padding: hp(5) }}>
-                <Title color={Colors.black}>A</Title>
+                <Title color={Colors.black}>j</Title>
               </View>
             </Button>
           )}
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Title variant={'titleLarge'} textT={'capitalize'} color={Colors.white}>{currentUser?.user.firstName} {currentUser?.user.lastName}</Title>
-            <Title font={'i400'} color={Colors.white}>{currentUser?.user.email}</Title>
+            <Title variant={'titleLarge'} textT={'capitalize'} color={Colors.white}>{user?.user.firstName} {user?.user.lastName}</Title>
+            <Title font={'i400'} color={Colors.white}>{user?.user.email}</Title>
           </View>
         </View>
         <View style={{ paddingTop: hp(5) }}>

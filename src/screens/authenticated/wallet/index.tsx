@@ -14,7 +14,7 @@ const Wallet = () => {
       </View>
       <View style={{backgroundColor:Colors.grey,  justifyContent:'flex-end', flex:1, borderTopRightRadius:hp(2), borderTopLeftRadius:hp(2)}}>
         <View style={{ flex: 1, padding: hp(2), marginHorizontal:'auto' }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignContent: 'center' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap:hp(8) }}>
             <Text style={{ color: Colors.white, fontFamily: 'i500' }} variant='titleLarge'>My Wallet</Text>
             <View style={{ padding: hp(2), backgroundColor: Colors.blue, borderRadius: hp(6) }}>
               <AntDesign name='find' color={Colors.white} />

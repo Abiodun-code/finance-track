@@ -1,43 +1,90 @@
-import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Text } from 'react-native-paper';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome, AntDesign } from '@expo/vector-icons';
+import { Text } from 'react-native-paper'; // Adjust if you're using a different Text component
 import { useNavigation } from '@react-navigation/native';
 import { hp } from '@/utils/responsiveHelper';
 
 interface Props {
   children: React.ReactNode;
   font?: any;
-  variant?: any | undefined;
-  color?: any | undefined;
+  variant?: any;
+  color?: any;
   showIcon?: boolean;
-  textA?: any | undefined;
-  textT?: any | undefined;
-  iconBg?: string | undefined;
-  iconSize?: number | undefined;
-  iconP?: number | undefined;
-  iconR?: number | undefined;
-  iconColor?: string | undefined;
+  showCloseIcon?: boolean;
+  onClosePress?: () => void;
+  textA?: any;
+  textT?: any;
+  iconBg?: string;
+  iconSize?: number;
+  iconP?: number;
+  iconR?: number;
+  iconColor?: string;
   width?: number | any;
 }
 
-const Title = ({ children, font, variant, color, showIcon = false, textA, textT, iconSize, iconBg, iconP, iconR, iconColor, width }: Props) => {
+const Title = ({
+  children,
+  font,
+  variant,
+  color,
+  showIcon = false,
+  showCloseIcon = false,
+  onClosePress,
+  textA,
+  textT,
+  iconSize,
+  iconBg,
+  iconP,
+  iconR,
+  iconColor,
+  width,
+}: Props) => {
   const navigation = useNavigation();
 
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center', width: width }}>
+    <View style={{ flexDirection: 'row', alignItems: 'center', width }}>
+      {/* Left-side back icon */}
       {showIcon && (
-        <TouchableOpacity onPress={() => navigation.goBack()} style={{ backgroundColor: iconBg, padding: iconP, borderRadius: iconR }}>
-          <MaterialIcons name="arrow-back-ios-new" size={iconSize || hp(3)} color={iconColor || "black"} />
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{
+            backgroundColor: iconBg,
+            padding: iconP,
+            borderRadius: iconR,
+          }}
+        >
+          <MaterialIcons name="arrow-back-ios-new" size={iconSize || hp(2.5)} color={iconColor || 'black'} />
         </TouchableOpacity>
       )}
 
+      {/* Title Text */}
       <Text
         variant={variant}
-        style={{ fontFamily: font, color: color, textAlign: textA || 'center', flex: 1, textTransform: textT }}
+        style={{
+          fontFamily: font,
+          color,
+          textAlign: textA || 'center',
+          flex: 1,
+          textTransform: textT,
+        }}
       >
         {children}
       </Text>
+
+      {/* Right-side close icon */}
+      {showCloseIcon && (
+        <TouchableOpacity
+          onPress={onClosePress || (() => navigation.goBack())}
+          style={{
+            backgroundColor: iconBg,
+            padding: iconP,
+            borderRadius: iconR,
+            marginLeft: 8,
+          }}
+        >
+          <AntDesign name="close" size={iconSize || hp(3)} color={iconColor || 'black'} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

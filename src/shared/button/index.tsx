@@ -1,3 +1,4 @@
+
 import { GestureResponderEvent, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { hp } from '@/utils/responsiveHelper';
@@ -13,7 +14,7 @@ interface Props {
   pr?: number,
   mt?: number,
   mr?: number,
-  ml?: number,
+  ml?: number | any,
   mb?: number,
   m?: number,
   mv?: number,

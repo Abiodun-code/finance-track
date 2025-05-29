@@ -37,6 +37,7 @@ interface Props {
   gap?: number | undefined,
   borderBC?: string | undefined,
   width?: number | undefined,
+  opacity?: number | undefined,
 }
 
 const Button = ({
@@ -73,6 +74,7 @@ const Button = ({
   pv,
   borderBC,
   width,
+  opacity,
 }: Props) => {
 
   // Combine className and dynamic inline styles
@@ -111,7 +113,7 @@ const Button = ({
 
   return (
     <TouchableOpacity
-      activeOpacity={0.7}
+      activeOpacity={opacity || 0.7}
       disabled={disabled}
       onPress={press}
       style={dynamicStyles}  // Apply inline styles for dynamic values

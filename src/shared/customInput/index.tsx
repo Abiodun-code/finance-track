@@ -11,7 +11,8 @@ interface CustomTextProps extends TextInputProps {
   bg?: any;
   bgColor?: any;
   width?: number | string; // new prop
-  textColor?: string
+  textColor?: string,
+  borderW?: number | string;
 }
 
 const Input: React.FC<CustomTextProps> = ({
@@ -22,10 +23,11 @@ const Input: React.FC<CustomTextProps> = ({
   bgColor,
   width,
   textColor,
+  borderW,
   ...props
 }) => {
   return (
-    <View style={{ marginBottom: mb || hp(2.5), width: width ?? '100%' }}>
+    <View style={{ marginBottom: mb || hp(2.5), width: width  }}>
       <TextInput
         label={label}
         style={{
@@ -34,8 +36,8 @@ const Input: React.FC<CustomTextProps> = ({
         }}
         outlineStyle={{
           borderRadius: hp(1.2),
-          borderColor: bg || Colors.grey,
-          borderWidth: hp(0.1),
+          borderColor: bg || Colors.gray,
+          borderWidth: hp(0.1) || borderW,
         }}
         mode="outlined"
         textColor={textColor || Colors.black}

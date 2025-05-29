@@ -1,5 +1,5 @@
 import { View, TouchableOpacity } from 'react-native';
-import { MaterialIcons, FontAwesome, AntDesign } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome, AntDesign, Entypo } from '@expo/vector-icons';
 import { Text } from 'react-native-paper'; // Adjust if you're using a different Text component
 import { useNavigation } from '@react-navigation/native';
 import { hp } from '@/utils/responsiveHelper';
@@ -42,7 +42,7 @@ const Title = ({
   const navigation = useNavigation();
 
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center', width }}>
+    <View style={{ flexDirection: 'row', alignItems: 'center', width:width}}>
       {/* Left-side back icon */}
       {showIcon && (
         <TouchableOpacity
@@ -53,7 +53,7 @@ const Title = ({
             borderRadius: iconR,
           }}
         >
-          <MaterialIcons name="arrow-back-ios-new" size={iconSize || hp(2.5)} color={iconColor || 'black'} />
+          <Entypo name="chevron-thin-left" size={iconSize || hp(2.7)} color={iconColor || 'black'} />
         </TouchableOpacity>
       )}
 
@@ -79,7 +79,6 @@ const Title = ({
             backgroundColor: iconBg,
             padding: iconP,
             borderRadius: iconR,
-            marginLeft: 8,
           }}
         >
           <AntDesign name="close" size={iconSize || hp(3)} color={iconColor || 'black'} />

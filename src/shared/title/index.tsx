@@ -42,7 +42,7 @@ const Title = ({
   const navigation = useNavigation();
 
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center', width:width}}>
+    <View style={{ flexDirection: 'row', alignItems: 'center', width:width }}>
       {/* Left-side back icon */}
       {showIcon && (
         <TouchableOpacity
@@ -53,7 +53,7 @@ const Title = ({
             borderRadius: iconR,
           }}
         >
-          <Entypo name="chevron-thin-left" size={iconSize || hp(2.7)} color={iconColor || 'black'} />
+          <Entypo name="chevron-thin-left" size={iconSize || hp(3)} color={iconColor || 'black'} />
         </TouchableOpacity>
       )}
 

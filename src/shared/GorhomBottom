@@ -1,0 +1,45 @@
+import React, { useMemo, forwardRef } from 'react';
+import { View, StyleSheet, ViewStyle } from 'react-native';
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
+
+interface Props {
+  children: React.ReactNode;
+  snapPoints?: (string | number)[];
+  backgroundColor?: string;
+  containerStyle?: ViewStyle;
+  enablePanDownToClose?: boolean;
+}
+
+const GorhomBottomSheet = forwardRef<BottomSheetMethods, Props>(({
+  children,
+  snapPoints = [],
+  backgroundColor = '#fff',
+  containerStyle = {},
+  enablePanDownToClose = true,
+}, ref) => {
+  const memoSnapPoints = useMemo(() => snapPoints, [snapPoints]);
+
+  return (
+    <BottomSheet
+      ref={ref}
+      index={-1}
+      snapPoints={memoSnapPoints}
+      enablePanDownToClose={enablePanDownToClose}
+      backgroundStyle={{ backgroundColor }}
+      handleIndicatorStyle={{ backgroundColor: '#ccc' }}
+    >
+      <BottomSheetView style={[styles.contentContainer, containerStyle]}>
+        {children}
+      </BottomSheetView>
+    </BottomSheet>
+  );
+});
+
+export default GorhomBottomSheet;
+
+const styles = StyleSheet.create({
+  contentContainer: {
+    flex: 1,
+  },
+});

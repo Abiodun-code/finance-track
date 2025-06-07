@@ -36,21 +36,13 @@ const CustomDropdown = ({ data, onSelect, placeholder }: Props) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.dropdownButton}
-        onPress={() => setShowDropdown(!showDropdown)}
-      >
+      <TouchableOpacity style={styles.dropdownButton} onPress={() => setShowDropdown(!showDropdown)}>
         {renderImage(selected?.image)}
         <Text style={styles.text}>
           {selected ? selected.label : placeholder}
         </Text>
-        <Ionicons
-          name={showDropdown ? 'chevron-up' : 'chevron-down'}
-          size={hp(2.5)}
-          color={Colors.gray}
-        />
+        <Ionicons name={showDropdown ? 'chevron-up' : 'chevron-down'} size={hp(2.5)} color={Colors.lighterGray}/>
       </TouchableOpacity>
-
       {showDropdown && (
         <View style={styles.dropdown}>
           <FlatList
@@ -59,13 +51,7 @@ const CustomDropdown = ({ data, onSelect, placeholder }: Props) => {
             style={{}}
             nestedScrollEnabled
             renderItem={({ item, index }) => (
-              <TouchableOpacity
-                style={[
-                  styles.item,
-                  index !== data.length - 1 && styles.itemBorder,
-                ]}
-                onPress={() => handleSelect(item)}
-              >
+              <TouchableOpacity style={[styles.item, index !== data.length - 1 && styles.itemBorder,]} onPress={() => handleSelect(item)}>
                 {renderImage(item.image)}
                 <Text style={styles.text}>{item.label}</Text>
               </TouchableOpacity>
@@ -84,8 +70,8 @@ const styles = StyleSheet.create({
   dropdownButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: hp(0.1),
-    borderColor: Colors.neutralGray,
+    borderWidth: hp(.1),
+    borderColor: Colors.whiteGray,
     borderRadius: hp(1),
     paddingVertical: hp(1.6),
     paddingHorizontal: hp(1.3),
@@ -107,7 +93,8 @@ const styles = StyleSheet.create({
   text: {
     flex: 1,
     fontSize: hp(1.8),
-    color: Colors.black,
+    color: Colors.lighterGray,
+    fontFamily:'i500'
   },
   dropdown: {
     overflow: 'hidden',
@@ -126,7 +113,7 @@ const styles = StyleSheet.create({
     gap: hp(1),
   },
   itemBorder: {
-    borderBottomWidth: hp(0.1),
+    borderBottomWidth: hp(.1),
     borderBottomColor: Colors.whiteGray,
   },
 });

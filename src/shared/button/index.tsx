@@ -25,7 +25,7 @@ interface Props {
   borderLW?: number | undefined,
   borderRW?: number | undefined,
   borderTW?: number | undefined,
-  borderBW?: number | undefined,
+  borderBW?: number | any,
   borderW?: number | undefined,
   borderC?: string | undefined,
   pL?: number,
@@ -36,7 +36,7 @@ interface Props {
   status?: undefined | any,
   gap?: number | undefined,
   borderBC?: string | undefined,
-  width?: number | undefined,
+  width?: number | any,
   opacity?: number | undefined,
 }
 

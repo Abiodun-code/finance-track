@@ -50,3 +50,4 @@ const Input: React.FC<CustomTextProps> = ({
 };
 
 export default Input;
+
